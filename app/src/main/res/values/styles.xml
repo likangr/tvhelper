@@ -1,0 +1,9 @@
+<resources>
+    <style name="AppTheme" parent="@style/Theme.Leanback">
+        <item name="android:windowFullscreen">true</item>
+        <item name="focusOutEnd">true</item>
+        <item name="focusOutFront">true</item>
+    </style>
+
+
+</resources>
