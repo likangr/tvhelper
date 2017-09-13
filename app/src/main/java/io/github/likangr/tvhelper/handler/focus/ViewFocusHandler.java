@@ -35,7 +35,7 @@ public class ViewFocusHandler implements ViewTreeObserver.OnGlobalFocusChangeLis
 
     private HashMap<ViewGroup, LastViewInfo> mLastFocusedViews;
     private HashMap<View, ViewFocusAppearance> mViewsGainFocusAppearance;
-    private HashMap<ViewGroup, ViewFocusAppearance> mWillBeUpdateViewsGainFocusAppearance;
+    private HashMap<ViewGroup, ViewFocusAppearance> mTempViewsGainFocusAppearance;
 
     private AnimatorSet mViewAnimatorSet;
     private Handler mHandler = new Handler();
@@ -68,53 +68,65 @@ public class ViewFocusHandler implements ViewTreeObserver.OnGlobalFocusChangeLis
         ViewGroup parent = (ViewGroup) newFocus.getParent();
         LastViewInfo lastViewInfo = mLastFocusedViews.get(parent);
 
-        if (oldFocus == null) {
-            // 页面刚启动刚获取焦点；oldFocus==null,newFocus!=null;
+        if (oldFocus != null && oldFocus.getParent() == parent) {
+            //都是一个viewGroup中的view；更新此viewGroup的lastFocusedView
             updateLastViewInfo(newFocus, parent, lastViewInfo);
         } else {
-            if (oldFocus.getParent() == parent) {
-                //都是一个viewGroup中的view；更新此viewGroup的lastFocusedView
-                updateLastViewInfo(newFocus, parent, lastViewInfo);
-            } else {
-                //不在同一级viewGroup中；
-
-                if (lastViewInfo.index != -1 && lastViewInfo.view == null) {
-                    //有默认index
+            //不在同一级viewGroup中；或oldFocus is null;
+            if (lastViewInfo.index != -1 && lastViewInfo.view == null) {
+                //有默认index
+                if (parent instanceof RecyclerView) {
+                    lastViewInfo.view = ((RecyclerView) parent).getLayoutManager().findViewByPosition(lastViewInfo.index);
+                } else {
                     lastViewInfo.view = parent.getChildAt(lastViewInfo.index);
                 }
+            }
 
-                if (lastViewInfo.view == null) {
-                    //此viewGroup中view 第一次获取焦点；
-                    updateLastViewInfo(newFocus, parent, lastViewInfo);
+            if (lastViewInfo.view == null) {
+                //此viewGroup中view 第一次获取焦点；
+                updateLastViewInfo(newFocus, parent, lastViewInfo);
+            } else {
+                final View view = lastViewInfo.view;
+                Log.d(TAG, "lastViewInfo:" + view);
+
+                if (view != newFocus
+                        && view.getParent() == parent
+                        && judgeIndexIsChanged(view, lastViewInfo, parent)) {
+                        /*如果view已经不在viewgroup中了就不再去让它获取焦点(或者view在group中的位置发生变化)*/
+                    final View.OnFocusChangeListener transferListener
+                            = newFocus.getOnFocusChangeListener();
+                    newFocus.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                        @Override
+                        public void onFocusChange(View v, boolean hasFocus) {
+                            view.requestFocus();
+                            newFocus.setOnFocusChangeListener(transferListener);
+                        }
+                    });
+                    Log.w(TAG, "focusTransfer: from " + newFocus + "to" + view);
+                    return true;
                 } else {
-                    final View view = lastViewInfo.view;
-                    Log.d(TAG, "lastViewInfo:" + view);
-
-                    if (view != newFocus
-                            && view.getParent() == parent
-                            && lastViewInfo.index == parent.indexOfChild(view)) {
-                        /*如果view已经不在viewgroup中了就不再去让它获取焦点,或者view在group中的位置发生变化*/
-                        final View.OnFocusChangeListener transferListener
-                                = newFocus.getOnFocusChangeListener();
-                        newFocus.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                            @Override
-                            public void onFocusChange(View v, boolean hasFocus) {
-                                view.requestFocus();
-                                newFocus.setOnFocusChangeListener(transferListener);
-                            }
-                        });
-                        return true;
-                    } else {
-                        updateLastViewInfo(newFocus, parent, lastViewInfo);
-                    }
+                    updateLastViewInfo(newFocus, parent, lastViewInfo);
                 }
             }
         }
         return false;
     }
 
+    private boolean judgeIndexIsChanged(View view, LastViewInfo lastViewInfo, ViewGroup parent) {
+        if (parent instanceof RecyclerView) {
+            return lastViewInfo.index == ((RecyclerView) parent).getChildAdapterPosition(view);
+        } else {
+            return lastViewInfo.index == parent.indexOfChild(view);
+        }
+    }
+
     private void updateLastViewInfo(View newFocus, ViewGroup parent, LastViewInfo lastViewInfo) {
-        lastViewInfo.index = parent.indexOfChild(newFocus);
+        if (parent instanceof RecyclerView) {
+            lastViewInfo.index = ((RecyclerView) parent).getChildAdapterPosition(newFocus);
+        } else {
+            lastViewInfo.index = parent.indexOfChild(newFocus);
+        }
+        Log.d("updateLastViewInfo", "index:" + lastViewInfo.index);
         lastViewInfo.view = newFocus;
     }
 
@@ -272,15 +284,15 @@ public class ViewFocusHandler implements ViewTreeObserver.OnGlobalFocusChangeLis
 
 
     private void addViewFocusAppearanceTraverse() {
-        if (mWillBeUpdateViewsGainFocusAppearance != null) {
+        if (mTempViewsGainFocusAppearance != null) {
             Iterator<Map.Entry<ViewGroup, ViewFocusAppearance>> iterator
-                    = mWillBeUpdateViewsGainFocusAppearance.entrySet().iterator();
+                    = mTempViewsGainFocusAppearance.entrySet().iterator();
             while (iterator.hasNext()) {
                 Map.Entry<ViewGroup, ViewFocusAppearance> next = iterator.next();
                 ViewGroup viewGroup = next.getKey();
                 ViewFocusAppearance nextValue = next.getValue();
                 for (int i = 0; i < viewGroup.getChildCount(); i++) {
-                    addViewFocusAppearance(viewGroup.getChildAt(i), nextValue, false);
+                    setFocusAppearance(viewGroup.getChildAt(i), nextValue, false);
                 }
             }
         }
@@ -288,7 +300,7 @@ public class ViewFocusHandler implements ViewTreeObserver.OnGlobalFocusChangeLis
 
     @Override
     public void onGlobalLayout() {
-        addViewFocusAppearanceTraverse();
+        Log.d(TAG, "onGlobalLayout");
         allotFirstFocusView();
     }
 
@@ -320,6 +332,7 @@ public class ViewFocusHandler implements ViewTreeObserver.OnGlobalFocusChangeLis
 
     @Override
     public void onGlobalFocusChanged(View oldFocus, View newFocus) {
+        addViewFocusAppearanceTraverse();
         Log.d(TAG, "onGlobalFocusChanged{" + "oldFocus:" + oldFocus + ",newFocus:" + newFocus + "}");
         resetView();
         if (mLastFocusedViews != null && newFocus !=
@@ -396,18 +409,16 @@ public class ViewFocusHandler implements ViewTreeObserver.OnGlobalFocusChangeLis
      * @param appearance
      * @param isAddForLevel1 是否是为一级子view 添加外观
      */
-    public void addViewFocusAppearance(View view, ViewFocusAppearance appearance, boolean isAddForLevel1) {
+    public void setFocusAppearance(View view, ViewFocusAppearance appearance, boolean isAddForLevel1) {
         if (isAddForLevel1) {
-            if (mWillBeUpdateViewsGainFocusAppearance == null)
-                mWillBeUpdateViewsGainFocusAppearance = new HashMap<>();
-            mWillBeUpdateViewsGainFocusAppearance.put((ViewGroup) view, appearance);
+            if (mTempViewsGainFocusAppearance == null)
+                mTempViewsGainFocusAppearance = new HashMap<>();
+            mTempViewsGainFocusAppearance.put((ViewGroup) view, appearance);
         } else {
-            if (view.isFocusable()) {
-                if (mViewsGainFocusAppearance == null)
-                    mViewsGainFocusAppearance = new HashMap<>();
-                mViewsGainFocusAppearance.put(view, appearance);
+            if (mViewsGainFocusAppearance == null)
+                mViewsGainFocusAppearance = new HashMap<>();
+            mViewsGainFocusAppearance.put(view, appearance);
 
-            }
         }
     }
 
@@ -417,13 +428,17 @@ public class ViewFocusHandler implements ViewTreeObserver.OnGlobalFocusChangeLis
      *
      * @param recyclerView
      */
-    public void addRecycleViewFocusAppearance(RecyclerView recyclerView) {
-        if (mWillBeUpdateViewsGainFocusAppearance == null)
-            mWillBeUpdateViewsGainFocusAppearance = new HashMap<>();
+    public void setFocusAppearance(RecyclerView recyclerView) {
+        if (mTempViewsGainFocusAppearance == null)
+            mTempViewsGainFocusAppearance = new HashMap<>();
             /*设置recycleview 默认 item样式*/
-        ViewFocusAppearance appearance = new ViewFocusAppearance().setFocusStrategy(ViewFocusStrategy.STRATEGY_Y_SCALE_Y_BORDER).setBorderParams(new BorderView.BorderParams().setShadowWidth(BorderView.BorderParams.SHADOW_MAX_WIDTH).setShadowColor(BorderView.BorderParams.SHADOW_COLOR_BLUE));
+        ViewFocusAppearance appearance = new ViewFocusAppearance().setFocusStrategy(
+                ViewFocusStrategy.STRATEGY_Y_SCALE_Y_BORDER).setBorderParams(
+                        new BorderView.BorderParams().setShadowWidth(
+                                BorderView.BorderParams.SHADOW_MAX_WIDTH).
+                                setShadowColor(BorderView.BorderParams.SHADOW_COLOR_BLUE));
 
-        mWillBeUpdateViewsGainFocusAppearance.put(recyclerView, appearance);
+        mTempViewsGainFocusAppearance.put(recyclerView, appearance);
 
     }
 

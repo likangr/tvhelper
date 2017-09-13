@@ -33,13 +33,13 @@ public class MainActivity extends FocusHandleBaseActivity {
         recycleView.setAdapter(adapter);
 
 
-        getViewFocusHandler().addRecycleViewFocusAppearance(recycleView);//给recycleview 添加焦点外观；
+        getViewFocusHandler().setFocusAppearance(recycleView);//给recycleview 添加焦点外观；
         ViewFocusAppearance appearance = new ViewFocusAppearance()
                 .setFocusStrategy(ViewFocusStrategy.STRATEGY_Y_SCALE_Y_BORDER)
                 .setBorderParams(new BorderView.BorderParams()
                         .setShadowColor(Color.RED)
                         .setShadowWidth(BorderView.BorderParams.SHADOW_MAX_WIDTH));
-        getViewFocusHandler().addViewFocusAppearance(findViewById(R.id.ll_btns1), appearance, true);
+        getViewFocusHandler().setFocusAppearance(findViewById(R.id.ll_btns1), appearance, true);
         getViewFocusHandler().rememberLastFocusView((ViewGroup) findViewById(R.id.ll_btns1));
         ViewFocusAppearance appearance1 = new ViewFocusAppearance()
                 .setAnimTime(200)
@@ -49,7 +49,7 @@ public class MainActivity extends FocusHandleBaseActivity {
                 .setXScaleValue(1.5f)
                 .setYScaleValue(1.5f);
 
-        getViewFocusHandler().addViewFocusAppearance(findViewById(R.id.tv4), appearance1, false);
+        getViewFocusHandler().setFocusAppearance(findViewById(R.id.tv4), appearance1, false);
 
     }
 
