@@ -1,0 +1,6 @@
+ext {
+
+    lib_version = [
+            kotlin: '1.3.21',
+    ]
+}

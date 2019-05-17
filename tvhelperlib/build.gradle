@@ -1,0 +1,39 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+def final adaptVersion = 28
+def final minVersion = 17
+
+android {
+    compileSdkVersion adaptVersion
+
+    defaultConfig {
+        minSdkVersion minVersion
+        targetSdkVersion adaptVersion
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            jniDebuggable false
+            minifyEnabled true
+            zipAlignEnabled true
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+        debug {
+            jniDebuggable true
+            minifyEnabled false
+            zipAlignEnabled true
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha05'
+    //kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${lib_version.kotlin}"
+    //leanback
+    api 'androidx.leanback:leanback:1.0.0'
+}

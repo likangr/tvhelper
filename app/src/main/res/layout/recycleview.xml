@@ -6,11 +6,11 @@
     android:clipChildren="false"
     android:orientation="vertical">
 
-    <android.support.v17.leanback.widget.VerticalGridView
+    <androidx.leanback.widget.VerticalGridView
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="0px"
-        android:layout_margin="@dimen/px100"
+        android:layout_margin="30dp"
         android:layout_weight="1"
         android:clipChildren="false" />
 
@@ -30,50 +30,54 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/px100"
+                android:layout_margin="30dp"
                 android:background="#ff0"
                 android:clickable="true"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:padding="@dimen/px30"
+                android:padding="15dp"
                 android:text="按钮1"
-                android:textColor="@color/colorPrimary" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/px100"
+                android:layout_marginTop="30dp"
                 android:background="#ff0"
                 android:clickable="true"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:padding="@dimen/px30"
+                android:padding="15dp"
                 android:text="按钮2"
-                android:textColor="@color/colorPrimary" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/px100"
+                android:layout_margin="30dp"
                 android:background="#ff0"
                 android:clickable="true"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:padding="@dimen/px30"
+                android:padding="15dp"
                 android:text="按钮3"
-                android:textColor="@color/colorPrimary" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/tv4"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="30dp"
             android:background="#0ff"
-            android:gravity="center"
-            android:text="按钮4"
             android:clickable="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:layout_margin="@dimen/px100"
-            android:layout_width="@dimen/px200"
-            android:layout_height="@dimen/px200"/>
+            android:gravity="center"
+            android:text="按钮4"
+            android:textSize="16sp" />
     </LinearLayout>
 </LinearLayout>
