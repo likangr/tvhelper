@@ -1,4 +1,4 @@
-package com.likang.tvhelperlib.focus;
+package com.likang.tvhelper.lib.focus;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.Nullable;
 
-import com.likang.tvhelperlib.util.ScreenUtil;
+import com.likang.tvhelper.lib.util.ScreenUtil;
 
 
 /**

@@ -1,4 +1,4 @@
-package com.likang.tvhelperlib.focus;
+package com.likang.tvhelper.lib.focus;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
-import com.likang.tvhelperlib.util.Logger;
+import com.likang.tvhelper.lib.util.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;

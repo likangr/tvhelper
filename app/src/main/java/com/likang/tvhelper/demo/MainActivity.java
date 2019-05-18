@@ -10,11 +10,11 @@ import android.widget.TextView;
 import androidx.leanback.widget.VerticalGridView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.likang.tvhelperlib.focus.BaseActivity;
-import com.likang.tvhelperlib.focus.BorderView;
-import com.likang.tvhelperlib.focus.ViewFocusAppearance;
-import com.likang.tvhelperlib.focus.ViewFocusStrategy;
-import com.likang.tvhelperlib.util.ScreenUtil;
+import com.likang.tvhelper.lib.focus.BaseActivity;
+import com.likang.tvhelper.lib.focus.BorderView;
+import com.likang.tvhelper.lib.focus.ViewFocusAppearance;
+import com.likang.tvhelper.lib.focus.ViewFocusStrategy;
+import com.likang.tvhelper.lib.util.ScreenUtil;
 
 import java.util.ArrayList;
 

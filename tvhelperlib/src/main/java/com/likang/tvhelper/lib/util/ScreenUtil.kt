@@ -1,4 +1,4 @@
-package com.likang.tvhelperlib.util
+package com.likang.tvhelper.lib.util
 
 import android.app.Activity
 import android.app.Application

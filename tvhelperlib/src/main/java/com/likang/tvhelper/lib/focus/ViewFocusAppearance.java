@@ -1,4 +1,4 @@
-package com.likang.tvhelperlib.focus;
+package com.likang.tvhelper.lib.focus;
 
 /**
  *

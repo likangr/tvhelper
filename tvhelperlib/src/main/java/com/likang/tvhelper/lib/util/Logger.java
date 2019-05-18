@@ -1,13 +1,15 @@
 
-package com.likang.tvhelperlib.util;
+package com.likang.tvhelper.lib.util;
 
 import android.util.Log;
 
-import com.likang.tvhelperlib.BuildConfig;
+import com.likang.tvhelper.lib.BuildConfig;
 
 
 /**
  * Logger
+ *
+ * @author likangren
  */
 public class Logger {
 
