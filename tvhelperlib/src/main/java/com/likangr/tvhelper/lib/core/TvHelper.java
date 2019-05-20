@@ -1,9 +1,9 @@
-package com.likang.tvhelper.lib.core;
+package com.likangr.tvhelper.lib.core;
 
 import android.app.Application;
 
-import com.likang.tvhelper.lib.util.ApplicationHolder;
-import com.likang.tvhelper.lib.util.ScreenUtil;
+import com.likangr.tvhelper.lib.util.ApplicationHolder;
+import com.likangr.tvhelper.lib.util.ScreenUtil;
 
 /**
  * @author likangren

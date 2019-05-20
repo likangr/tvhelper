@@ -1,4 +1,4 @@
-package com.likang.tvhelper.lib.focus;
+package com.likangr.tvhelper.lib.focus;
 
 /**
  * Created by Likang on 2017/6/12 21:01.

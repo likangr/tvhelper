@@ -1,8 +1,8 @@
-package com.likang.tvhelper.demo;
+package com.likangr.tvhelper.demo;
 
 import android.app.Application;
 
-import com.likang.tvhelper.lib.core.TvHelper;
+import com.likangr.tvhelper.lib.core.TvHelper;
 
 /**
  * @author Likang

@@ -1,9 +1,9 @@
 
-package com.likang.tvhelper.lib.util;
+package com.likangr.tvhelper.lib.util;
 
 import android.util.Log;
 
-import com.likang.tvhelper.lib.BuildConfig;
+import com.likangr.tvhelper.lib.BuildConfig;
 
 
 /**

@@ -8,7 +8,7 @@ android {
     compileSdkVersion adaptVersion
 
     defaultConfig {
-        applicationId "com.likang.tvhelper.demo"
+        applicationId "com.likangr.tvhelper.demo"
         minSdkVersion minVersion
         targetSdkVersion adaptVersion
         versionCode 1

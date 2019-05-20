@@ -1,4 +1,4 @@
-package com.likang.tvhelper.lib.focus;
+package com.likangr.tvhelper.lib.focus;
 
 import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
@@ -14,9 +14,9 @@ import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.likang.tvhelper.lib.util.ApplicationHolder;
-import com.likang.tvhelper.lib.util.Logger;
-import com.likang.tvhelper.lib.util.ScreenUtil;
+import com.likangr.tvhelper.lib.util.ApplicationHolder;
+import com.likangr.tvhelper.lib.util.Logger;
+import com.likangr.tvhelper.lib.util.ScreenUtil;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.likang.tvhelper.demo;
+package com.likangr.tvhelper.demo;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,11 +10,11 @@ import android.widget.TextView;
 import androidx.leanback.widget.VerticalGridView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.likang.tvhelper.lib.focus.BaseActivity;
-import com.likang.tvhelper.lib.focus.BorderView;
-import com.likang.tvhelper.lib.focus.ViewFocusAppearance;
-import com.likang.tvhelper.lib.focus.ViewFocusStrategy;
-import com.likang.tvhelper.lib.util.ScreenUtil;
+import com.likangr.tvhelper.lib.focus.BaseActivity;
+import com.likangr.tvhelper.lib.focus.BorderView;
+import com.likangr.tvhelper.lib.focus.ViewFocusAppearance;
+import com.likangr.tvhelper.lib.focus.ViewFocusStrategy;
+import com.likangr.tvhelper.lib.util.ScreenUtil;
 
 import java.util.ArrayList;
 

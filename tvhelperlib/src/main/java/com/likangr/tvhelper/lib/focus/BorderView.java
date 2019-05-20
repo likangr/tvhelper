@@ -1,4 +1,4 @@
-package com.likang.tvhelper.lib.focus;
+package com.likangr.tvhelper.lib.focus;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,9 +7,9 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.view.View;
 
-import com.likang.tvhelper.lib.util.ApplicationHolder;
-import com.likang.tvhelper.lib.util.Logger;
-import com.likang.tvhelper.lib.util.ScreenUtil;
+import com.likangr.tvhelper.lib.util.ApplicationHolder;
+import com.likangr.tvhelper.lib.util.Logger;
+import com.likangr.tvhelper.lib.util.ScreenUtil;
 
 
 /**
